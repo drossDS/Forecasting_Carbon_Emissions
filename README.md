@@ -14,7 +14,20 @@ From the plot, a distinct upward trend in natural gas emmissions can be observed
 ## Summary of Evaluation and Forecasting Process
 * Creating input datasets:  checking for stationarity and establishing transformations 
 * Raw emmissions data were decomposed into trend, seasonal and residual componentns ... this wasn't used for anything, maybe to inform ACF / PACF
-* 
+* Then model functions were made for AR, MA, ARMA, ARIMA, SARIMA
+*   Models were iterative swept through p and q
+* Inverse transformation functions for Log shift, shift only, log only
+* Made single funciton to optimize funcitons by sweeping p and q values together and selecting which type of function it was (not including SARIMA)
+  *  Then ran optimizers on all 4 datasets and calcaulated RMSE values to find best models
+*  Used auto ARIMA for run a SARIMA model with optimization
+*  Combined sarima model with p and q parameters
+*  Selected the 4 best models of those run....
+*  Created train and validation (test) datasets using the last year of the provided data (note that we say train , but it's actually validation)
+  * did this for 1990 onward data
+* Then tried fitting the models against different input datasets for different time periods
+* Then created averges for everything (but ignored that)
+* Plotted 3 best models below RMSE 2, shose lowest RMSE as best model
+* Then finally fit the best model
 
 
 
