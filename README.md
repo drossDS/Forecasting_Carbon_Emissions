@@ -29,7 +29,7 @@ From the plot, a distinct upward trend in natural gas emmissions can be observed
 * Plotted 3 best models below RMSE 2, shose lowest RMSE as best model
 * Then finally fit the best model
 
-
+![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
 
 
 Visually, the data are clearly not stationary, and stationarity is generally required for data 
