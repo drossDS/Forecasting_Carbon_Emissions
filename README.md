@@ -12,12 +12,19 @@ As the emissions data included a vareity of sources, the natural gas data needed
 From the plot, a distinct upward trend in natural gas emmissions can be observed from around 1990 onward that is inconsistent with the previous 17 years of data.  It further appears that this trend is maintained through the end of the data.  It is unknown what caused this to occur, however, it can be speculated the data prior to this event would not be relevent to a forecasting model for a time period beyond the provided data.  Thus, the data used for model fiting and forecasting was taken from 1990 onward.
 
 ## Summary of Evaluation and Forecasting Process
+* Creating input datasets:  checking for stationarity and establishing transformations 
+* Raw emmissions data were decomposed into trend, seasonal and residual componentns ... this wasn't used for anything, maybe to inform ACF / PACF
+* 
 
+
+
+
+Visually, the data are clearly not stationary, and stationarity is generally required for data 
 * examined data stationarity with moving averages and dickey fuller tests
 * attempted to remove sataionarity with transformations
 * 
 
-
+****** Add a 2x2 sbplot of all dat transformations
 
 
 ## Models Run
