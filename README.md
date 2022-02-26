@@ -30,7 +30,7 @@ From the plot, a distinct upward trend in natural gas emmissions can be observed
 * Then finally fit the best model
 
 
-![](Model_Optimization_Process_Small.png)
+![](Emissions_Images/Model_Optimization_Process_Small.png)
 
 
 
