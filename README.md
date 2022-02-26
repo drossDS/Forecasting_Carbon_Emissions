@@ -29,7 +29,10 @@ From the plot, a distinct upward trend in natural gas emmissions can be observed
 * Plotted 3 best models below RMSE 2, shose lowest RMSE as best model
 * Then finally fit the best model
 
-![](Model_Optimization_Process_Small)
+
+![](Model_Optimization_Process_Small.png)
+
+
 
 ![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
 
