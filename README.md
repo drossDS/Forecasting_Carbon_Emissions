@@ -63,8 +63,8 @@ Using the auto_arima function from pmdarima, Seasonal ARIMA (SARIMA) models were
 | ---------- | ---- | ------------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-:  |
 | ARIMA_logdata| ARIMA | Log Data   | 10  |  1  | 10  | N/A | N/A | N/A | N/A | 2.2299|
 | SARIMA_data| SARIMA | Raw Data    | 1   |  1  | 1  | 0 | 1 | 1 | 12 | 2.2591 |
-| SARIMA_data| SARIMA | Log Data    | 3   |  1  | 4  | 0 | 1 | 1 | 12 | 2.5107 |
-| SARIMA_data| SARIMA | Raw Data    | 10  |  1  | 10 | 0 | 1 | 1 | 12 | 2.1682 |
+| SARIMA_logdata| SARIMA | Log Data    | 3   |  1  | 4  | 0 | 1 | 1 | 12 | 2.5107 |
+| SARIMA_data_1010| SARIMA | Raw Data    | 10  |  1  | 10 | 0 | 1 | 1 | 12 | 2.1682 |
 
 *Table Notes:
 - N/A values indicate that the seasonal parameters were not inputs for the non-searonal ARIMA model
@@ -74,12 +74,12 @@ Using the auto_arima function from pmdarima, Seasonal ARIMA (SARIMA) models were
 
 A comparison of the preductions from each model to the actual training emissions data are plotted below
 
-********SHOW PLOT!!!!!!***********
+![](Emissions_Images/Four_Best_Model_Predictions.png)
 
 ### Trianing Data Timespan and Final Model Selection
 For timeseries data, the most recent data has often have the greatesst impact on the model forecasts as much older data may be far less relevant to current trends and negatively impact model acuracy. Thus evaluating the effects of the training data's starting point on the prediction accuracy was required to determine the proper timespan of data against which the model should be trained.  
 
-The training data used previously were split into a validation (test) dataset which contained the most recent 12 months of emissions data (Aug-2015 - Jul-2016), and five different training data subsets with different timespans.  Each of the four models above was then fitted against the five training data subsets, and used to forecast the most recent 12 months of emissions data (Aug-2015 - Jul-2016).  The root mean sqaure error between the forecasted emissions and the actual emissions (validation dataset) were then calcaulated for each model-timespan combination to determine which produced the most acurate forecasts.  The model-timespan combination with the lowest RMSE value was found to be the ____ model withe a ____ month training data timespan.  Its Mean Average Percent Error (MAPE) against the validation dataset was clulated. The Error and forecast of the final model are shown in the plot below:
+The training data used previously were split into a validation (test) dataset which contained the most recent 12 months of emissions data (Aug-2015 - Jul-2016), and five different training data subsets with different timespans.  Each of the four models above was then fitted against the five training data subsets, and used to forecast the most recent 12 months of emissions data (Aug-2015 - Jul-2016).  The root mean sqaure error between the forecasted emissions and the actual emissions (validation dataset) were then calcaulated for each model-timespan combination to determine which produced the most acurate forecasts.  The model-timespan combination with the lowest RMSE value was found to be the "SARIMA_logdata" model with the 67 month training data timespan.  Its Mean Average Percent Error (MAPE) against the validation dataset was clulated. The Error and forecast of the final model are shown in the plot below:
 
 ****SHWO THE PLOT!!!!!!
 
