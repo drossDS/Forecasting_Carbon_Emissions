@@ -9,29 +9,28 @@ Global warming presents a major challenge to humanity, and in an effort to quant
 ## Initial Processing
 As the emissions data included a vareity of sources, the natural gas data needed to be extracted into its own data frame for cleaning and pre-processing.  Note, while the attached code will show that all emissions data for the various fuels were plotted, this report will only consider the natural gas emmissions data as they were only emissions this project was tasked with forecasting.  After dropping unecesasry columns, the time data was converted from an integer object to a proper date-time format.  This step revealed that the time data contained a null value between every twleve-month interval, which was quickly determined to coincide with a twelve-month (yearly) emissions sum.  The data corresponding to these null time values were removed as they are not part of a proper timeseries and of no use in forcasting.  A plot of the cleaned natural gas emission sdata is shown below.
 
-****** Insert image opf all emissions data
+****** Insert image op all emissions data
 
 From the plot, a distinct upward trend in natural gas emmissions can be observed from around 1990 onward that is inconsistent with the previous 17 years of data.  It further appears that this trend is maintained through the end of the data.  It is unknown what caused this to occur, however, it can be speculated the data prior to this event would not be relevent to a forecasting model for a time period beyond the provided data.  Thus, the data used for model fiting and forecasting was taken from 1990 onward.
 
 ## Exploraoty Data Analaysis
- - NEED TO SHOW THE DECOMPOSITION AND CONCLUDE MAXIMUM PREIOD OF SEASONAOLITY AS 12 MONTHS from the data
+ - NEED TO SHOW THE DECOMPOSITION AND CONCLUDE MAXIMUM PERIOD OF SEASONAOLITY AS 12 MONTHS from the data
  - ALSO INCLUDE STATIONAIRTY RESULTS HERE FOR EACH DATASET
 
 
 
-## Summary of Evaluation and Forecasting Process
-
-I WANNA USE:
+## Summary of Model Development Process
+The forecasting model development process is described below and presented graphically with the provided flowcharts.
 - It was determined during initial evaltuations that the selected transofrmation for the training dat affected the error of the predictions.  Thus four datasets with different transformations were created
-- Ecah of the four datasets was then used to train four varieties of non-seasonal models each optimized against 13 hyperparameter combinations for a grand total of 208 non-seasonal models evaluated
-- An "auto_arima" function with built-in optimization was run against the bets two performing datasets from the non-seasonal models, and the funciton output two corresponding best-performing models
+- Each of the four datasets was then used to train four varieties of non-seasonal models each optimized against 13 hyperparameter combinations for a grand total of 208 non-seasonal model combinations evaluated.  The best non-seasonal model was identified to be the combination with the lowest Root Mean Square Error (RMSE) of its emissions predictions versus the input emissions data
+- An "auto_arima" function with built-in optimization was run against the best two performing datasets from the non-seasonal models ("Raw Data" and "Log Data"), and the funciton output two corresponding best-performing models based on the AIC metric
 - A final hybridized-parameter seasonal model was created combining the best performing dataset, and hyperparameters across all models
-- 
 
-____ basic steps to the process:
+![](Emissions_Images/Model_Optimization_Process_Small.png)
 
-* Exploring input data timespans against validation data for each model, selecting lowest error model 
-* Creating official forecast using proper datasets.
+- A validation dataset was then crated from the last 12 months of the provided emisions data.  All four models were then used to forecast the emissions during this period using five subsets of the remainign emissions data to create training datasets of five different timespans from the prior 25 years, 10 years, 79 months, 67 months, and 55 months of emissions data.  THe forecasting errors were then calcualted for each model and timespan combination to select the final model
+
+![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
 
 ### Training Data Processing
 The general rule is that the training data used to fit regression models must be stationary for the model to make a proper prediction.  However, it was determined during initial investiagtions that the non-sationary data actually produced the lowest-error predictions.  From this, four input datasets were created with various combinations of transformations to be run through all models (explained in further detail below) so that the datasets could be compared and the best tranformation method(s) selected.
@@ -81,7 +80,7 @@ The training data used previously were split into a validation (test) dataset wh
 
 Based on the validation dataset, the predicted model error that would be observed aginst the test data is approximately 3%.
 
-## FOrecasting Beyond the Provided Data
+## Forecasting Beyond the Provided Data
 With final model variety, training data transformation technique, training data timespan, and hyperparaemters selected, the natural gas emssions were forecasted 12 months beyond the provided data.  A final traiing dataset was crteated from the most recent __ months of the provided emissions data and the forecasted carbone emissions are shown in the plot below.
 
 ****SHWO THE PLOT!!!!!!
@@ -116,11 +115,11 @@ The RMSE values for each combinations predictions aginst their training data
 * Then finally fit the best model
 
 
-![](Emissions_Images/Model_Optimization_Process_Small.png)
 
 
 
-![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
+
+
 
 
 Visually, the data are clearly not stationary, and stationarity is generally required for data 
