@@ -21,8 +21,6 @@ From the plot, a distinct upward trend in natural gas emmissions can be observed
 
 ## Summary of Evaluation and Forecasting Process
 
-
-
 I WANNA USE:
 - It was determined during initial evaltuations that the selected transofrmation for the training dat affected the error of the predictions.  Thus four datasets with different transformations were created
 - Ecah of the four datasets was then used to train four varieties of non-seasonal models each optimized against 13 hyperparameter combinations for a grand total of 208 non-seasonal models evaluated
@@ -31,10 +29,7 @@ I WANNA USE:
 - 
 
 ____ basic steps to the process:
-* Selecting input data processing techniques (data transformation techniques)
-* Running transformations through 4 non-seasonal model varieties, iterated for p and q
-* Choosing seasonal models for each best dataset
-* Creating hybrid parameter model and model building
+
 * Exploring input data timespans against validation data for each model, selecting lowest error model 
 * Creating official forecast using proper datasets.
 
@@ -77,7 +72,10 @@ A comparison of the preductions from each model to the actual training emissions
 
 ********SHOW PLOT!!!!!!***********
 
+### Trianing Data Time-Span Selection
+AS timeseries data are influenced by trends it often best to use the most recent data to make predictions.  TO determine how much of the data prior to the prediciton
 
+For timeseries data the most recent data has often has the greatesst impact on the model forecasts as much older data may be far less relevant to current trends and negatively impact model acuracy. Thus evaluationg the effects of the training data's starting point on the prediction accuracy was required to determine the proper timespan of data against which the model should be trained.
 
 
 The RMSE values for each combinations predictions aginst their training data
