@@ -65,7 +65,7 @@ Using the auto_arima function from pmdarima, Seasonal ARIMA (SARIMA) models were
 | SARIMA_logdata| SARIMA | Log Data    | 3   |  1  | 4  | 0 | 1 | 1 | 12 | 2.5107 |
 | SARIMA_data_1010| SARIMA | Raw Data    | 10  |  1  | 10 | 0 | 1 | 1 | 12 | 2.1682 |
 
-*Table Notes:
+*Table Notes:*
 - N/A values indicate that the seasonal parameters were not inputs for the non-searonal ARIMA model
 - Values for *d* and *D* were set to 1 to indicate that the models were integrating
 - Values for *M* were set to 12 as the seasonal models require the period of seasonality as an input
