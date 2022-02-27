@@ -7,11 +7,11 @@
 Global warming presents a major challenge to humanity, and in an effort to quantify and forecast it's impacts, greenhouse gas emmissions predictions would be a reuqired input.  Timeseries data were provided for monthly greenhouse gas emmissions from a vareity of fuel sources used for electric energy production in the United States from 1973 to 2016.  The fuel soureces include natural gas, coal, and petroleum among others.  The goal of this project focused on forecasting the carbon diaoxide (CO2) emmisions from electric energy production fueld by natural gas for 12 months beyond the provided data.
 
 ## Initial Processing
-As the emissions data included a vareity of sources, the natural gas data needed to be extracted into its own data frame for cleaning and pre-processing.  Note, while the attached code will show that all emissions data for the various fuels were plotted, this report will only consider the natural gas emmissions data as they were only emissions this project was tasked with forecasting.  After dropping unecesasry columns, the time data was converted from an integer object to a proper date-time format.  This step revealed that the time data contained a null value between every twleve-month interval, which was quickly determined to coincide with a twelve-month (yearly) emissions sum.  The data corresponding to these null time values were removed as they are not part of a proper timeseries and of no use in forcasting.  A plot of the cleaned natural gas emission sdata is shown below.
+As the emissions data included a vareity of sources, the natural gas data needed to be extracted into its own data frame for cleaning and pre-processing.  Note, while the attached code will show that all emissions data for the various fuels were plotted, this report will only consider the natural gas emmissions data as they were only emissions this project was tasked with forecasting.  After dropping unecesasry columns, the time data was converted from an integer object to a proper date-time format.  This step revealed that the time data contained a null value between every twleve-month interval, which was quickly determined to coincide with a twelve-month (yearly) emissions sum.  The data corresponding to these null time values were removed as they are not part of a proper timeseries and of no use in forcasting.  A plot of the cleaned natural gas emissions data is plotted below (left).
 
-****** Insert image of all emissions data from 1973 onward
+![](Emissions_Images/Emissions_Combined_800.png)
 
-From the plot, a distinct upward trend in natural gas emmissions can be observed from around 1990 onward that is inconsistent with the previous 17 years of data.  It further appears that this trend is maintained through the end of the data.  It is unknown what caused this to occur, however, it can be speculated the data prior to this event would not be relevent to a forecasting model for a time period beyond the provided data.  Thus, the data used for model fiting and forecasting was taken from 1990 onward.
+From the plot, a distinct upward trend in natural gas emmissions can be observed from around 1990 onward that is inconsistent with the previous 17 years of data.  It further appears that this trend is maintained through the end of the data.  It is unknown what caused this to occur, however, it can be speculated the data prior to this event would not be relevent to a forecasting model for a time period beyond the provided data.  Thus, the data used for model fiting and forecasting was taken from 1990 onward (see right plot above).
 
 ## Exploraoty Data Analaysis
 Exploratory data analyssios focused primarily on determining the stationarity of the data and examining its seasonal properties.  Visually, the emissions data are clearly not stationary, which is a general requirement for timeseries regression models.  However, it was determined from some initial model fits that non-stationary data provided much better results (to be discussed later in *Training Data Processing*). The seasonal properties of the data are also visually apparent from the regular 12-month preiod of oscilation corresponding to the cyclical nature of energy demand throughout the year in the United States.  Both the stationarity and seasonlity were examined using a "seasonal_decompose" function to decompose the emissions dataset their trend, seasonality, and residuual components.  The results are provided below, showing the isolated upward trend in emissions, and a 12-month seasonal period.
@@ -33,8 +33,6 @@ The forecasting model development process is described below and presented graph
 
 ![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
 
-
-
 ### Training Data Processing
 The general rule is that the training data used to fit regression models must be stationary for the model to make a proper prediction.  However, it was determined during initial investiagtions that the non-sationary data actually produced the lowest-error predictions.  From this, four input datasets were created with various combinations of transformations to be run through all models (explained in further detail below) so that the datasets could be compared and the best tranformation method(s) selected.
 - ***Raw Data***:  Untransformed natural gas emissions data in its "raw" form after having been cleaned and formatted as described previously
@@ -43,8 +41,7 @@ The general rule is that the training data used to fit regression models must be
 - ***Log Shifted Data***:  Log-transformed Raw Data which was then "shifted" as described above
 Of the four datasets above, only "shifted" datasets acheived stationarity as determined by an Augmented Dickey-Fuller (ADF) test.  As stated previously, stationarity had a negative impact on the model performacne as will be explained in the next section.
 
-***Maybe show images of the four datasets??????
-****** Add a 2x2 sbplot of all data transformations
+![](Emissions_Images/Four_transformations.png)
 
 
 ### Fitting and Optimizing Non-Seasonal Regression Models
