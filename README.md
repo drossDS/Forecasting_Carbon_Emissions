@@ -25,7 +25,7 @@ I WANNA USE:
 - It was determined during initial evaltuations that the selected transofrmation for the training dat affected the error of the predictions.  Thus four datasets with different transformations were created
 - Ecah of the four datasets was then used to train four varieties of non-seasonal models each optimized against 13 hyperparameter combinations for a grand total of 208 non-seasonal models evaluated
 - An "auto_arima" function with built-in optimization was run against the bets two performing datasets from the non-seasonal models, and the funciton output two corresponding best-performing models
-- A final hybridze parameter seasonal model was created combining the best performing dataset, and hyperparameters across all models
+- A final hybridized-parameter seasonal model was created combining the best performing dataset, and hyperparameters across all models
 - 
 
 ____ basic steps to the process:
@@ -48,8 +48,8 @@ Four model varieties were created including:
 - Autoregressive Moving Average (ARMA) Models
 - Autoregressive Integrating Moving Average (ARIMA) Models
 
-Each of these four models were trained against all four datasets above creating a combination of 16 model-dataset combinations.  Additionally, the p and q hyperparameters present in each of these model combinations were swepth through the values 0 through 12 with p and q being equal in all cases to limit computation time by limiting total hyperparameter combinations to just 13.  Thus, each of the 16 model-dataset combinations was run with hyperparameters p and q set equal through the values 0 - 12 for a grand total of 208 individual model-dataset-hyperparameter combinations.   Each combination was fit to the input training datasets, and their predictions were compared against the actaul emissions from the training data time period (1990 onward), and Root Mean Squared Error (RMSE) values were calculated for each model, and are shown in hte dropdown below.  
-From error outputs, two important conclusions can eb drawn:
+Each of these four models were trained against all four datasets above creating a combination of 16 model-dataset combinations.  Additionally, the p and q hyperparameters present in each of these model combinations were swepth through the values 0 through 12 with p and q being equal in all cases to limit computation time by limiting total hyperparameter combinations to just 13.  Thus, each of the 16 model-dataset combinations was run with hyperparameters p and q set equal through the values 0 - 12 for a grand total of 208 individual model-dataset-hyperparameter combinations.   Each combination was fit to the input training datasets, and their predictions were compared against the actaul emissions from the training data time period (1990 onward), and Root Mean Square Error (RMSE) values were calculated for each model, and are shown in hte dropdown below.  
+From error outputs, two important conclusions can be drawn:
 - Both shifted datasets produced much higher-error predictions, and thus the non-stationary datasets were providing much better predictions
 - The model with the lowest error was an ARIMA model accepting the log-transformed data ("Log Data") with p = q = 10
 
@@ -72,11 +72,29 @@ A comparison of the preductions from each model to the actual training emissions
 
 ********SHOW PLOT!!!!!!***********
 
-### Trianing Data Time-Span Selection
-AS timeseries data are influenced by trends it often best to use the most recent data to make predictions.  TO determine how much of the data prior to the prediciton
+### Trianing Data Timespan and Final Model Selection
+For timeseries data, the most recent data has often have the greatesst impact on the model forecasts as much older data may be far less relevant to current trends and negatively impact model acuracy. Thus evaluating the effects of the training data's starting point on the prediction accuracy was required to determine the proper timespan of data against which the model should be trained.  
 
-For timeseries data the most recent data has often has the greatesst impact on the model forecasts as much older data may be far less relevant to current trends and negatively impact model acuracy. Thus evaluationg the effects of the training data's starting point on the prediction accuracy was required to determine the proper timespan of data against which the model should be trained.
+The training data used previously were split into a validation (test) dataset which contained the most recent 12 months of emissions data (Aug-2015 - Jul-2016), and five different training data subsets with different timespans.  Each of the four models above was then fitted against the five training data subsets, and used to forecast the most recent 12 months of emissions data (Aug-2015 - Jul-2016).  The root mean sqaure error between the forecasted emissions and the actual emissions (validation dataset) were then calcaulated for each model-timespan combination to determine which produced the most acurate forecasts.  The model-timespan combination with the lowest RMSE value was found to be the ____ model withe a ____ month training data timespan.  Its Mean Average Percent Error (MAPE) against the validation dataset was clulated. The Error and forecast of the final model are shown in the plot below:
 
+****SHWO THE PLOT!!!!!!
+
+Based on the validation dataset, the predicted model error that would be observed aginst the test data is approximately 3%.
+
+## FOrecasting Beyond the Provided Data
+With final model variety, training data transformation technique, training data timespan, and hyperparaemters selected, the natural gas emssions were forecasted 12 months beyond the provided data.  A final traiing dataset was crteated from the most recent __ months of the provided emissions data and the forecasted carbone emissions are shown in the plot below.
+
+****SHWO THE PLOT!!!!!!
+
+
+## Conclusions:
+The conclusoins of this report are outlined as follows:
+- A vareity of seasonal and non-seasonal regression models were used optimized in combination with the transformation methods of the training data
+- The four best models based on root mean sqaure error were then selected to be further evaluated based on their ability to forecast the last year of the prodived emisions data
+- The effects of five training data timespans on each of the four best models were examined to determine which model and timespan combination produced a forecast with the lowest error
+- The best combination with the lowest Root Mean Square Error (RMSE) was selected and determined to have Mean Avergae Percent Error (MAPE) of approximately 3% when forecasting the last 12 months of provided emissions data
+- THe best model was a Seasonal Autoregressive Integrating Moving Average (SARIMA) model trained against the most recent 67 months of log-transformed emissions data
+- The final model was then employed to forecast the carbon emissions from natural gas electric energy production 12 motnhs beyond the provided emissions data
 
 The RMSE values for each combinations predictions aginst their training data
 
