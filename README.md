@@ -24,7 +24,11 @@ From the plot, a distinct upward trend in natural gas emmissions can be observed
 
 
 I WANNA USE:
-
+- It was determined during initial evaltuations that the selected transofrmation for the training dat affected the error of the predictions.  Thus four datasets with different transformations were created
+- Ecah of the four datasets was then used to train four varieties of non-seasonal models each optimized against 13 hyperparameter combinations for a grand total of 208 non-seasonal models evaluated
+- An "auto_arima" function with built-in optimization was run against the bets two performing datasets from the non-seasonal models, and the funciton output two corresponding best-performing models
+- A final hybridze parameter seasonal model was created combining the best performing dataset, and hyperparameters across all models
+- 
 
 ____ basic steps to the process:
 * Selecting input data processing techniques (data transformation techniques)
