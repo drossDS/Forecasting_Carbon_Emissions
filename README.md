@@ -9,28 +9,20 @@ Global warming presents a major challenge to humanity, and in an effort to quant
 ## Initial Processing
 As the emissions data included a vareity of sources, the natural gas data needed to be extracted into its own data frame for cleaning and pre-processing.  Note, while the attached code will show that all emissions data for the various fuels were plotted, this report will only consider the natural gas emmissions data as they were only emissions this project was tasked with forecasting.  After dropping unecesasry columns, the time data was converted from an integer object to a proper date-time format.  This step revealed that the time data contained a null value between every twleve-month interval, which was quickly determined to coincide with a twelve-month (yearly) emissions sum.  The data corresponding to these null time values were removed as they are not part of a proper timeseries and of no use in forcasting.  A plot of the cleaned natural gas emission sdata is shown below.
 
-****** Insert image op all emissions data
+****** Insert image of all emissions data from 1973 onward
 
 From the plot, a distinct upward trend in natural gas emmissions can be observed from around 1990 onward that is inconsistent with the previous 17 years of data.  It further appears that this trend is maintained through the end of the data.  It is unknown what caused this to occur, however, it can be speculated the data prior to this event would not be relevent to a forecasting model for a time period beyond the provided data.  Thus, the data used for model fiting and forecasting was taken from 1990 onward.
 
 ## Exploraoty Data Analaysis
- - NEED TO SHOW THE DECOMPOSITION AND CONCLUDE MAXIMUM PERIOD OF SEASONAOLITY AS 12 MONTHS from the data
- - ALSO INCLUDE STATIONAIRTY RESULTS HERE FOR EACH DATASET
+Exploratory data analyssios focused primarily on determining the stationarity of the data and examining its seasonal properties.  Visually, the emissions data are clearly not stationary, which is a general requirement for timeseries regression models.  However, it was determined from some initial model fits that non-stationary data provided much better results (to be discussed later in *Training Data Processing*). The seasonal properties of the data are also visually apparent from the regular 12-month preiod of oscilation corresponding to the cyclical nature of energy demand throughout the year in the United States.  Both the stationarity and seasonlity were examined using a "seasonal_decompose" function to decompose the emissions dataset their trend, seasonality, and residuual components.  The results are provided below, showing the isolated upward trend in emissions, and a 12-month seasonal period.
 
+****SHOW THE IMAGE OF THE DECOMPOSITION.
 
-Visually, the data are clearly not stationary, and stationarity is generally required for data 
-* examined data stationarity with moving averages and dickey fuller tests
-* attempted to remove sataionarity with transformations
-* 
-
-****** Add a 2x2 sbplot of all dat transformations
-
-
-
+Also included in the exploratory data analsysis was the plotting of Autocorrelation and Partial Autocorrelation Functions (ACF) and PACF), and whiel the intent was to inform the hyperparameter selection process for the regression models, the results did not prove to be useful in model optimization process.
 
 ## Summary of Model Development Process
 The forecasting model development process is described below and presented graphically with the provided flowcharts.  More detailed descriptions are provided in the dropdown menu below the images.
-- It was determined during initial evaltuations that the selected transofrmation for the training dat affected the error of the predictions.  Thus four datasets with different transformations were created
+- It was determined during initial evaltuations that the selected transofrmation for the training data affected the error of the predictions.  Thus four datasets with different transformations were created
 - Each of the four datasets was then used to train four varieties of non-seasonal models each optimized against 13 hyperparameter combinations for a grand total of 208 non-seasonal model combinations evaluated.  The best non-seasonal model was identified to be the combination with the lowest Root Mean Square Error (RMSE) of its emissions predictions versus the input emissions data
 - An "auto_arima" function with built-in optimization was run against the best two performing datasets from the non-seasonal models ("Raw Data" and "Log Data"), and the funciton output two corresponding best-performing models based on the AIC metric
 - A final hybridized-parameter seasonal model was created combining the best performing dataset, and hyperparameters across all models
@@ -50,6 +42,10 @@ The general rule is that the training data used to fit regression models must be
 - ***Shifted Data***:  Raw Data which has been "shifted" by taking the difference between successive data point; effectively, the derivative of the dataset
 - ***Log Shifted Data***:  Log-transformed Raw Data which was then "shifted" as described above
 Of the four datasets above, only "shifted" datasets acheived stationarity as determined by an Augmented Dickey-Fuller (ADF) test.  As stated previously, stationarity had a negative impact on the model performacne as will be explained in the next section.
+
+***Maybe show images of the four datasets??????
+****** Add a 2x2 sbplot of all data transformations
+
 
 ### Fitting and Optimizing Non-Seasonal Regression Models
 Four model varieties were created including:
