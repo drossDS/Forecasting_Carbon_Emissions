@@ -13,7 +13,47 @@ As the emissions data included a vareity of sources, the natural gas data needed
 
 From the plot, a distinct upward trend in natural gas emmissions can be observed from around 1990 onward that is inconsistent with the previous 17 years of data.  It further appears that this trend is maintained through the end of the data.  It is unknown what caused this to occur, however, it can be speculated the data prior to this event would not be relevent to a forecasting model for a time period beyond the provided data.  Thus, the data used for model fiting and forecasting was taken from 1990 onward.
 
+## Exploraoty Data Analaysis
+ - NEED TO SHOW THE DECOMPOSITION AND CONCLUDE MAXIMUM PREIOD OF SEASONAOLITY AS 12 MONTHS from the data
+ - ALSO INCLUDE STATIONAIRTY RESULTS HERE FOR EACH DATASET
+
+
+
 ## Summary of Evaluation and Forecasting Process
+
+____ basic steps to the process:
+* Selecting input data processing techniques (data transformation techniques)
+* Running transformations through 4 non-seasonal model varieties, iterated for p and q
+* Choosing seasonal models for each best dataset
+* Creating hybrid parameter model and model building
+* Exploring input data timespans against validation data for each model, selecting lowest error model 
+* Creating official forecast using proper datasets.
+
+### Training Data Processing
+The general rule is that the training data used to fit regression models must be stationary for the model to make a proper prediction.  However, it was determined during initial investiagtions that the non-sationary data actually produced the lowest-error predictions.  From this, four input datasets were created with various combinations of transformations to be run through all models (explained in further detail below) so that the datasets could be compared and the best tranformation method(s) selected.
+- ***Raw Data***:  Untransformed natural gas emissions data in its "raw" form after having been cleaned and formatted as described previously
+- ***Log Data***:  The Raw Data with a log transformation, attmepting to achieve stationarity
+- ***Shifted Data***:  Raw Data which has been "shifted" by taking the difference between successive data point; effectively, the derivative of the dataset
+- ***Log Shifted Data***:  Log-transformed Raw Data which was then "shifted" as described above
+Of the four datasets above, only "shifted" datasets acheived stationarity as determined by an Augmented Dickey-Fuller (ADF) test.  As stated previously, stationarity had a negative impact on the model performacne as will be explained in the next section.
+
+### Fitting and Optimizing Non-Seasonal Regression Models
+Four model varieties were created including:
+- Autoregressive (AR) Models
+- Moving Average (MA) Models
+- Autoregressive Moving Average (ARMA) Models
+- Autoregressive Integrating Moving Average (ARIMA) Models
+
+Each of these four models were trained against all four datasets above creating a combination of 16 model-dataset combinations.  Additionally, the p and q hyperparameters present in each of these model combinations were swepth through the values 0 through 12 with p and q being equal in all cases to limit computation time by limiting total hyperparameter combinations to just 13.  Thus, each of the 16 model-dataset combinations was run with hyperparameters p and q set equal through the values 0 - 12 for a grand total of 208 individual model-dataset-hyperparameter combinations.   Each combination was fit to the input training datasets, and their predictions were compared against the actaul emissions from the training data time period (1990 onward), and Root Mean Squared Error (RMSE) values were calculated for each model, and are shown in hte dropdown below.  
+From error outputs, two important conclusions can eb drawn:
+- Both shifted datasets produced much higher-error predictions, and thus the non-stationary datasets were providing much better predictions
+- The model with the lowest error was an ARIMA model accepting the log-transformed data ("Log Data") with p = q = 10
+
+### Fitting and Optimizing Seasonal Models
+Using the auto_arima function from pmdarima, seasonal models were created and optimized within the function.  From the above conclusion around stationarity data, auto_arima was only run with the raw and log-transformed datasets.
+
+The RMSE values for each combinations predictions aginst their training data
+
 * Creating input datasets:  checking for stationarity and establishing transformations 
 * Raw emmissions data were decomposed into trend, seasonal and residual componentns ... this wasn't used for anything, maybe to inform ACF / PACF
 * Then model functions were made for AR, MA, ARMA, ARIMA, SARIMA
