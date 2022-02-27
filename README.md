@@ -43,7 +43,6 @@ Of the four datasets above, only "shifted" datasets acheived stationarity as det
 
 ![](Emissions_Images/Four_transformations.png)
 
-
 ### Fitting and Optimizing Non-Seasonal Regression Models
 Four model varieties were created including:
 - Autoregressive (AR) Models
@@ -72,23 +71,23 @@ Using the auto_arima function from pmdarima, Seasonal ARIMA (SARIMA) models were
 - Values for *M* were set to 12 as the seasonal models require the period of seasonality as an input
 - Exploring additional vlaues for *d*, *D*, and *M* was not considered due to time limitations
 
-A comparison of the preductions from each model to the actual training emissions data are plotted below
+A comparison of the preductions from each model to the actual training emissions data are plotted below:
 
 ![](Emissions_Images/Four_Best_Model_Predictions.png)
 
 ### Trianing Data Timespan and Final Model Selection
 For timeseries data, the most recent data has often have the greatesst impact on the model forecasts as much older data may be far less relevant to current trends and negatively impact model acuracy. Thus evaluating the effects of the training data's starting point on the prediction accuracy was required to determine the proper timespan of data against which the model should be trained.  
 
-The training data used previously were split into a validation (test) dataset which contained the most recent 12 months of emissions data (Aug-2015 - Jul-2016), and five different training data subsets with different timespans.  Each of the four models above was then fitted against the five training data subsets, and used to forecast the most recent 12 months of emissions data (Aug-2015 - Jul-2016).  The root mean sqaure error between the forecasted emissions and the actual emissions (validation dataset) were then calcaulated for each model-timespan combination to determine which produced the most acurate forecasts.  The model-timespan combination with the lowest RMSE value was found to be the "SARIMA_logdata" model with the 67 month training data timespan.  Its Mean Average Percent Error (MAPE) against the validation dataset was clulated. The Error and forecast of the final model are shown in the plot below:
+The training data used previously were split into a validation (test) dataset which contained the most recent 12 months of emissions data (Aug-2015 - Jul-2016), and five different training data subsets with different timespans.  Each of the four models above was then fitted against the five training data subsets, and used to forecast the most recent 12 months of emissions data (Aug-2015 - Jul-2016).  The root mean sqaure error between the forecasted emissions and the actual emissions (validation dataset) were then calcaulated for each model-timespan combination to determine which produced the most acurate forecasts.  The model-timespan combination with the lowest RMSE value was found to be the "SARIMA_logdata" model with the 67 month training data timespan.  Its Mean Average Percent Error (MAPE) against the validation dataset was calculated. The error and forecast of the final model are shown in the plot below:
 
-****SHWO THE PLOT!!!!!!
+![](Emissions_Images/Final_Model_Forecast_vs_Validation.png)
 
 Based on the validation dataset, the predicted model error that would be observed aginst the test data is approximately 3%.
 
 ## Forecasting Beyond the Provided Data
 With final model variety, training data transformation technique, training data timespan, and hyperparaemters selected, the natural gas emssions were forecasted 12 months beyond the provided data.  A final traiing dataset was crteated from the most recent __ months of the provided emissions data and the forecasted carbone emissions are shown in the plot below.
 
-****SHWO THE PLOT!!!!!!
+![](Emissions_Images/Final_Forecast.png)
 
 ## Conclusions:
 The conclusoins of this report are outlined as follows:
