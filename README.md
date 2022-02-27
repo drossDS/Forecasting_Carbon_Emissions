@@ -18,9 +18,18 @@ From the plot, a distinct upward trend in natural gas emmissions can be observed
  - ALSO INCLUDE STATIONAIRTY RESULTS HERE FOR EACH DATASET
 
 
+Visually, the data are clearly not stationary, and stationarity is generally required for data 
+* examined data stationarity with moving averages and dickey fuller tests
+* attempted to remove sataionarity with transformations
+* 
+
+****** Add a 2x2 sbplot of all dat transformations
+
+
+
 
 ## Summary of Model Development Process
-The forecasting model development process is described below and presented graphically with the provided flowcharts.
+The forecasting model development process is described below and presented graphically with the provided flowcharts.  More detailed descriptions are provided in the dropdown menu below the images.
 - It was determined during initial evaltuations that the selected transofrmation for the training dat affected the error of the predictions.  Thus four datasets with different transformations were created
 - Each of the four datasets was then used to train four varieties of non-seasonal models each optimized against 13 hyperparameter combinations for a grand total of 208 non-seasonal model combinations evaluated.  The best non-seasonal model was identified to be the combination with the lowest Root Mean Square Error (RMSE) of its emissions predictions versus the input emissions data
 - An "auto_arima" function with built-in optimization was run against the best two performing datasets from the non-seasonal models ("Raw Data" and "Log Data"), and the funciton output two corresponding best-performing models based on the AIC metric
@@ -28,9 +37,11 @@ The forecasting model development process is described below and presented graph
 
 ![](Emissions_Images/Model_Optimization_Process_Small.png)
 
-- A validation dataset was then crated from the last 12 months of the provided emisions data.  All four models were then used to forecast the emissions during this period using five subsets of the remainign emissions data to create training datasets of five different timespans from the prior 25 years, 10 years, 79 months, 67 months, and 55 months of emissions data.  THe forecasting errors were then calcualted for each model and timespan combination to select the final model
+- A validation dataset was then crated from the last 12 months of the provided emisions data.  All four models were then used to forecast the emissions during this period using five subsets of the remainign emissions data to create training datasets of five different timespans from the prior 25 years, 10 years, 79 months, 67 months, and 55 months of emissions data.  THe forecasting errors were then calcualted for each of the 20 model and timespan combinations to select the final model
 
 ![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
+
+
 
 ### Training Data Processing
 The general rule is that the training data used to fit regression models must be stationary for the model to make a proper prediction.  However, it was determined during initial investiagtions that the non-sationary data actually produced the lowest-error predictions.  From this, four input datasets were created with various combinations of transformations to be run through all models (explained in further detail below) so that the datasets could be compared and the best tranformation method(s) selected.
@@ -85,7 +96,6 @@ With final model variety, training data transformation technique, training data 
 
 ****SHWO THE PLOT!!!!!!
 
-
 ## Conclusions:
 The conclusoins of this report are outlined as follows:
 - A vareity of seasonal and non-seasonal regression models were used optimized in combination with the transformation methods of the training data
@@ -94,49 +104,6 @@ The conclusoins of this report are outlined as follows:
 - The best combination with the lowest Root Mean Square Error (RMSE) was selected and determined to have Mean Avergae Percent Error (MAPE) of approximately 3% when forecasting the last 12 months of provided emissions data
 - THe best model was a Seasonal Autoregressive Integrating Moving Average (SARIMA) model trained against the most recent 67 months of log-transformed emissions data
 - The final model was then employed to forecast the carbon emissions from natural gas electric energy production 12 motnhs beyond the provided emissions data
-
-The RMSE values for each combinations predictions aginst their training data
-
-* Creating input datasets:  checking for stationarity and establishing transformations 
-* Raw emmissions data were decomposed into trend, seasonal and residual componentns ... this wasn't used for anything, maybe to inform ACF / PACF
-* Then model functions were made for AR, MA, ARMA, ARIMA, SARIMA
-*   Models were iterative swept through p and q
-* Inverse transformation functions for Log shift, shift only, log only
-* Made single funciton to optimize funcitons by sweeping p and q values together and selecting which type of function it was (not including SARIMA)
-  *  Then ran optimizers on all 4 datasets and calcaulated RMSE values to find best models
-*  Used auto ARIMA for run a SARIMA model with optimization
-*  Combined sarima model with p and q parameters
-*  Selected the 4 best models of those run....
-*  Created train and validation (test) datasets using the last year of the provided data (note that we say train , but it's actually validation)
-  * did this for 1990 onward data
-* Then tried fitting the models against different input datasets for different time periods
-* Then created averges for everything (but ignored that)
-* Plotted 3 best models below RMSE 2, shose lowest RMSE as best model
-* Then finally fit the best model
-
-
-
-
-
-
-
-
-
-Visually, the data are clearly not stationary, and stationarity is generally required for data 
-* examined data stationarity with moving averages and dickey fuller tests
-* attempted to remove sataionarity with transformations
-* 
-
-****** Add a 2x2 sbplot of all dat transformations
-
-
-## Models Run
-
-## Performance Evaluations
-
-## Conclusion
-
-
 
 
 # Contact Info
