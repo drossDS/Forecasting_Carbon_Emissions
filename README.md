@@ -50,7 +50,7 @@ From error outputs, two important conclusions can eb drawn:
 - The model with the lowest error was an ARIMA model accepting the log-transformed data ("Log Data") with p = q = 10
 
 ### Fitting and Optimizing Seasonal Models
-Using the auto_arima function from pmdarima, seasonal models were created and optimized within the function.  From the above conclusion around stationarity data, auto_arima was only run with the raw and log-transformed datasets.
+Using the auto_arima function from pmdarima, seasonal models were created and optimized within the function, and the best performing model was output (as evaluated aginst AIC values).  From the above conclusion around stationarity data, auto_arima was only run with the raw and log-transformed datasets.  Within this function, the starting and maximum hyperparaemeter values can be selected and the model will run with each hyperparameter combintaion within the starting to maximum ranges.  After some trail-and-error, it was determined that non-seasonal hyperparaemters p and q would be run between the values 0 and 4 as ranges larger than this were prohibatively time-intensive.  The best model parameters for each dataset were then output and the RMSE values of their predictions against the training data were calcualted in the dame fashion as the non-seasonal models.  In an attemtp to create an even more accurate model, a final model was then speficied combining the non-seasonal parameters
 
 The RMSE values for each combinations predictions aginst their training data
 
