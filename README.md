@@ -16,7 +16,7 @@ From the plot, a distinct upward trend in natural gas emmissions can be observed
 ## Exploraoty Data Analaysis
 Exploratory data analyssios focused primarily on determining the stationarity of the data and examining its seasonal properties.  Visually, the emissions data are clearly not stationary, which is a general requirement for timeseries regression models.  However, it was determined from some initial model fits that non-stationary data provided much better results (to be discussed later in *Training Data Processing*). The seasonal properties of the data are also visually apparent from the regular 12-month preiod of oscilation corresponding to the cyclical nature of energy demand throughout the year in the United States.  Both the stationarity and seasonlity were examined using a "seasonal_decompose" function to decompose the emissions dataset their trend, seasonality, and residuual components.  The results are provided below, showing the isolated upward trend in emissions, and a 12-month seasonal period.
 
-****SHOW THE IMAGE OF THE DECOMPOSITION.
+![](Emissions_Images/Decomposition.png)
 
 Also included in the exploratory data analsysis was the plotting of Autocorrelation and Partial Autocorrelation Functions (ACF) and PACF), and whiel the intent was to inform the hyperparameter selection process for the regression models, the results did not prove to be useful in model optimization process.
 
@@ -65,6 +65,7 @@ Using the auto_arima function from pmdarima, Seasonal ARIMA (SARIMA) models were
 | SARIMA_data| SARIMA | Raw Data    | 1   |  1  | 1  | 0 | 1 | 1 | 12 | 2.2591 |
 | SARIMA_data| SARIMA | Log Data    | 3   |  1  | 4  | 0 | 1 | 1 | 12 | 2.5107 |
 | SARIMA_data| SARIMA | Raw Data    | 10  |  1  | 10 | 0 | 1 | 1 | 12 | 2.1682 |
+
 *Table Notes:
 - N/A values indicate that the seasonal parameters were not inputs for the non-searonal ARIMA model
 - Values for *d* and *D* were set to 1 to indicate that the models were integrating
