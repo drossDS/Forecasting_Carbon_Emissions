@@ -21,6 +21,11 @@ From the plot, a distinct upward trend in natural gas emmissions can be observed
 
 ## Summary of Evaluation and Forecasting Process
 
+
+
+I WANNA USE:
+
+
 ____ basic steps to the process:
 * Selecting input data processing techniques (data transformation techniques)
 * Running transformations through 4 non-seasonal model varieties, iterated for p and q
@@ -55,7 +60,20 @@ Using the auto_arima function from pmdarima, Seasonal ARIMA (SARIMA) models were
 | Model Name | Type | Input Dataset | *p* | *d* | *q* | *P* | *D* | *Q* | *M* | RMSE |
 | ---------- | ---- | ------------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-:  |
 | ARIMA_logdata| ARIMA | Log Data   | 10  |  1  | 10  | N/A | N/A | N/A | N/A | 2.2299|
-| SARIMA_data| SARIMA
+| SARIMA_data| SARIMA | Raw Data    | 1   |  1  | 1  | 0 | 1 | 1 | 12 | 2.2591 |
+| SARIMA_data| SARIMA | Log Data    | 3   |  1  | 4  | 0 | 1 | 1 | 12 | 2.5107 |
+| SARIMA_data| SARIMA | Raw Data    | 10  |  1  | 10 | 0 | 1 | 1 | 12 | 2.1682 |
+*Table Notes:
+- N/A values indicate that the seasonal parameters were not inputs for the non-searonal ARIMA model
+- Values for *d* and *D* were set to 1 to indicate that the models were integrating
+- Values for *M* were set to 12 as the seasonal models require the period of seasonality as an input
+- Exploring additional vlaues for *d*, *D*, and *M* was not considered due to time limitations
+
+A comparison of the preductions from each model to the actual training emissions data are plotted below
+
+********SHOW PLOT!!!!!!***********
+
+
 
 
 The RMSE values for each combinations predictions aginst their training data
