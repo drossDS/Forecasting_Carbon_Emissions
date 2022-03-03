@@ -21,15 +21,15 @@ Exploratory data analysis focused primarily on determining the stationarity of t
 Also included in the exploratory data analysis was the plotting of Autocorrelation and Partial Autocorrelation Functions (ACF) and PACF), and while the intent was to inform the hyperparameter selection process for the regression models, the results were not used in the model optimization process due to a hyperparameter optimization process described later.
 
 ## Summary of Model Development Process
-The forecasting model development process is described below and presented graphically with the provided flowcharts.  More detailed descriptions are provided in the dropdown menu below the images.
-- It was determined during initial evaluations that the selected transformation for the training data affected the error of the predictions.  Thus, four datasets with different transformations were created
+The forecasting model development process is described below and presented graphically with the provided flowcharts.  More detailed descriptions are provided in the following subsections.
+- It was determined during initial evaluations that the selected transformation for the training data affected the error of the predictions.  Thus, four datasets were created with different transformations applied
 - Each of the four datasets was then used to train four varieties of non-seasonal models each optimized against 13 hyperparameter combinations for a grand total of 208 non-seasonal model combinations evaluated.  The best non-seasonal model was identified to be the combination with the lowest Root Mean Square Error (RMSE) of its emissions predictions versus the input emissions data
-- An "auto_arima" function with built-in optimization was run against the best two performing datasets from the non-seasonal models ("Raw Data" and "Log Data"), and the function output two corresponding best-performing models based on the AIC metric
-- A final hybridized-parameter seasonal model was created combining the best performing dataset, and hyperparameters across all models
+- An "auto_arima" function with built-in optimization was run against the best two performing datasets from the non-seasonal models ("Raw Data" and "Log Data"), and the function output two corresponding best-performing models based on the AIC metric (which is the built-in optimization metric for the "auto_arima" function)
+- A final hybridized-parameter seasonal model was created by combining the best performing dataset and hyperparameters across all models
 
 ![](Emissions_Images/Model_Optimization_Process_Small.png)
 
-- A validation dataset was then crated from the last 12 months of the provided emissions data.  All four models were then used to forecast the emissions during this period using five subsets of the remaining emissions data to create training datasets of five different timespans from the prior 25 years, 10 years, 79 months, 67 months, and 55 months of emissions data.  The forecasting errors were then calculated for each of the 20 model and timespan combinations to select the final model
+- A validation dataset was then crated from the last 12 months of the provided emissions data.  All four models were then used to forecast the emissions during this period using five subsets of the remaining emissions data to create training datasets of five different timespans from the prior 25 years, 10 years, 79 months, 67 months, and 55 months of emissions data.  The forecast errors were then calculated for each of the 20 model and timespan combinations to select the final model
 
 ![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
 
