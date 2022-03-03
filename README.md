@@ -34,12 +34,12 @@ The forecasting model development process is described below and presented graph
 ![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
 
 ### Training Data Processing
-The general rule is that the training data used to fit regression models must be stationary for the model to make a proper prediction.  However, it was determined during initial investigations that the non-stationary data actually produced the lowest-error predictions.  From this, four input datasets were created with various combinations of transformations to be run through all models (explained in further detail below) so that the datasets could be compared and the best transformation method(s) selected.
+The general rule is that the training data used to fit regression models must be stationary for the model to make a proper prediction.  However, it was determined during initial investigations that the non-stationary datasets actually produced the lowest-error predictions.  From this, four input datasets were created with various combinations of transformations to be run through all models (explained in further detail below) so that the datasets could be compared and the best transformation method(s) selected.
 - ***Raw Data***:  Untransformed natural gas emissions data in its "raw" form after having been cleaned and formatted as described previously
 - ***Log Data***:  The Raw Data with a log transformation, attempting to achieve stationarity
 - ***Shifted Data***:  Raw Data which has been "shifted" by taking the difference between successive data point; effectively, the derivative of the dataset
 - ***Log Shifted Data***:  Log-transformed Raw Data which was then "shifted" as described above
-Of the four datasets above, only "shifted" datasets achieved stationarity as determined by an Augmented Dickey-Fuller (ADF) test.  As stated previously, stationarity had a negative impact on the model performance as will be explained in the next section.
+Of the four datasets above, only "shifted" datasets achieved stationarity as determined by an Augmented Dickey-Fuller (ADF) test.  As stated previously, stationarity had a negative impact on the model performance as will be explained in the next section.  The four datasets are plotted below.
 
 ![](Emissions_Images/Four_transformations.png)
 
@@ -50,13 +50,16 @@ Four model varieties were created including:
 - Autoregressive Moving Average (ARMA) Models
 - Autoregressive Integrating Moving Average (ARIMA) Models
 
-Each of these four models were trained against all four datasets above creating a combination of 16 model-dataset combinations.  Additionally, the p and q hyperparameters present in each of these model combinations were swept through the values 0 through 12 with p and q being equal in all cases to limit computation time by limiting total hyperparameter combinations to just 13.  Thus, each of the 16 model-dataset combinations was run with hyperparameters p and q set equal through the values 0 - 12 for a grand total of 208 individual model-dataset-hyperparameter combinations.   Each combination was fit to the input training datasets, and their predictions were compared against the actual emissions from the training data time period (1990 onward), and Root Mean Square Error (RMSE) values were calculated for each model, and are shown in the dropdown below.  
+Each of these four models were trained against all four datasets above, creating a combination of 16 model-dataset combinations.  Additionally, the *p* and *q* hyperparameters present in each of these model combinations were swept through the values 0 through 12 with *p* and *q* being equal in all cases to limit computation time by limiting total hyperparameter combinations to just 13.  Thus, each of the 16 model-dataset combinations was run with hyperparameters *p* and *q* set equal through the values 0 - 12 for a grand total of 208 individual model-dataset-hyperparameter combinations.   Each combination was fit to the input training datasets, and their predictions were compared against the actual emissions from the training data time period (1990 onward).  Root Mean Square Error (RMSE) values were then calculated for each model and are shown below.
+
+****** ******8Neeed the DIAGRAM HERE ***********
+
 From error outputs, two important conclusions can be drawn:
-- Both shifted datasets produced much higher-error predictions, and thus the non-stationary datasets were providing much better predictions
-- The model with the lowest error was an ARIMA model accepting the log-transformed data ("Log Data") with p = q = 10
+- Both shifted datasets produced much higher-error predictions, and the non-stationary datasets were providing much better predictions
+- The model with the lowest error was an ARIMA model accepting the log-transformed data ("Log Data") with *p* = *q* = 10
 
 ### Fitting and Optimizing Seasonal Models
-Using the auto_arima function from pmdarima, Seasonal ARIMA (SARIMA) models were created and optimized within the function, and the best performing model was output (as evaluated against AIC values).  From the above conclusion around stationarity data, auto_arima was only run with the raw and log-transformed datasets.  Within this function, the starting and maximum hyperparameter values can be selected and the model will run with each hyperparameter combination within the starting to maximum ranges.  After some trail-and-error, it was determined that non-seasonal hyperparameters p and q would be run between the values 0 and 4 as ranges larger than this were prohibitively time-intensive.  The best model parameters for each dataset were then output and the RMSE values of their predictions against the training data were calculated in the same fashion as the non-seasonal models.  In an attempt to create an even more accurate model, a final model was then specified combining the parameters from the best seasonal and non-seasonal models.  The RMSE values and parameters for all 4 models are shown in the table below with all non-seasonal (p, d, q) and seasonal (P, D, Q, M) hyperparameters listed:
+Using the auto_arima function from pmdarima, Seasonal ARIMA (SARIMA) models were created and optimized within the function, and the best performing model was output (as evaluated against AIC values).  From the above conclusion regarding stationarity data, auto_arima was only run with the raw and log-transformed datasets.  Within this function, the starting and maximum hyperparameter values were selected to limit the number of hyperparameter combinations evaluated by the optimizer.  After some trial-and-error, it was determined that non-seasonal hyperparameters *p* and *q* would be run between the values 0 and 4 as ranges larger than this were prohibitively time-intensive.  The best model parameters for each dataset were then output and the RMSE values of their predictions against the training data were calculated in the same fashion as the non-seasonal models.  In an attempt to create an even more accurate model, a final model was then specified combining the parameters from the best seasonal and non-seasonal models.  The RMSE values and parameters for all four models are shown in the table below with all non-seasonal (*p*, *d*, *q*) and all seasonal (*P*, *D*, *Q*, *M*) hyperparameters listed:
 
 | Model Name | Type | Input Dataset | *p* | *d* | *q* | *P* | *D* | *Q* | *M* | RMSE |
 | ---------- | ---- | ------------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-:  |
@@ -66,7 +69,7 @@ Using the auto_arima function from pmdarima, Seasonal ARIMA (SARIMA) models were
 | SARIMA_data_1010| SARIMA | Raw Data    | 10  |  1  | 10 | 0 | 1 | 1 | 12 | 2.1682 |
 
 *Table Notes:*
-- N/A values indicate that the seasonal parameters were not inputs for the non-seasonal ARIMA model
+- N/A values indicate that the seasonal parameters were not applicable inputs for the non-seasonal ARIMA model
 - Values for *d* and *D* were set to 1 to indicate that the models were integrating
 - Values for *M* were set to 12 as the seasonal models require the period of seasonality as an input
 - Exploring additional values for *d*, *D*, and *M* was not considered due to time limitations
@@ -76,9 +79,9 @@ A comparison of the predictions from each model to the actual training emissions
 ![](Emissions_Images/Four_Best_Model_Predictions.png)
 
 ### Training Data Timespan and Final Model Selection
-For timeseries data, the most recent data often have the greatest impact on the model forecasts as much older data may be far less relevant to current trends and negatively impact model accuracy. Thus, evaluating the effects of the training data's starting point on the prediction accuracy was required to determine the proper timespan of data against which the model should be trained.  
+For timeseries data, the most recent data often have the greatest impact on the model forecasts as much older data may be far less relevant to current trends and negatively impact model accuracy. Thus, evaluating the effects of the training data's starting point on the prediction accuracy was required to determine the proper timespan of data on which the model should be trained.  
 
-The training data used previously were split into a validation (test) dataset which contained the most recent 12 months of emissions data (Aug-2015 - Jul-2016), and five different training data subsets with different timespans (25 years, 10 years, 79 months, 67 months, and 55 months).  Each of the four models above was then fitted against the five training data subsets, and used to forecast the most recent 12 months of emissions data (Aug-2015 - Jul-2016).  The root mean square error between the forecasted emissions and the actual emissions (validation dataset) were then calculated for each model-timespan combination to determine which produced the most accurate forecasts.  This process was earlier shown in below provided again for clarity.
+The training data used previously were split into a validation (test) dataset which contained the most recent 12 months of emissions data (Aug-2015 - Jul-2016), and five different training data subsets with different timespans (25 years, 10 years, 79 months, 67 months, and 55 months).  Each of the four models above was then fitted against the five training data subsets, and used to forecast the most recent 12 months of emissions data (Aug-2015 - Jul-2016).  The root mean square error between the forecasted emissions and the actual emissions (validation dataset) were then calculated for each model-timespan combination to determine which produced the most accurate forecasts.  This process was shown earlier, but is provided again for clarity.
 
 ![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
 
@@ -89,19 +92,19 @@ The model-timespan combination with the lowest RMSE value was found to be the "S
 Based on the validation dataset, the predicted model error that would be observed against the test data is approximately 3%.
 
 ## Forecasting Beyond the Provided Data
-With final model variety, training data transformation technique, training data timespan, and hyperparameters selected, the natural gas emissions were forecasted 12 months beyond the provided data.  A final training dataset was created from the most recent __ months of the provided emissions data and the forecasted carbon emissions are shown in the plot below.
+With final model variety, training data transformation technique, training data timespan, and hyperparameters selected, the natural gas emissions were forecasted 12 months beyond the provided data.  A final training dataset was created from the most recent 67 months of the provided emissions data, and the forecasted carbon emissions are shown in the plot below.
 
 ![](Emissions_Images/Final_Forecast.png)
 
 ## Conclusions:
 The conclusions of this report are outlined as follows:
-- A variety of seasonal and non-seasonal regression models were used optimized in combination with the transformation methods of the training data
-- The four best models based on root mean square error were then selected to be further evaluated based on their ability to forecast the last year of the provided emissions data
+- A variety of seasonal and non-seasonal regression models were optimized in combination with the transformation methods of the training data
+- The four best models with the lowest Root Mean Square Error (RMSE) were then selected to be further evaluated based on their ability to forecast the last year of the provided emissions data
 - The effects of five training data timespans on each of the four best models were examined to determine which model and timespan combination produced a forecast with the lowest error
-- The best combination with the lowest Root Mean Square Error (RMSE) was selected and determined to have Mean Average Percent Error (MAPE) of approximately 3% when forecasting the last 12 months of provided emissions data
+- The best combination with the lowest RMSE was selected and determined to have Mean Average Percent Error (MAPE) of approximately 3% when forecasting the last 12 months of provided emissions data (the validation dataset)
 - The best model was a Seasonal Autoregressive Integrating Moving Average (SARIMA) model trained against the most recent 67 months of log-transformed emissions data
 - The final model was then employed to forecast the carbon emissions from natural gas electric energy production 12 months beyond the provided emissions data
-
+- It can be seen that the upward emissions trend and seasonality are maintained in the forecasted data
 
 # Contact Info
 - Email: <a href = "mailto: drossetti12@gmail.com" style="color: red">drossetti12@gmail.com</a>
