@@ -85,7 +85,7 @@ The training data used previously were split into a validation (test) dataset wh
 
 ![](Emissions_Images/Model_Timespan_Evaluation_Small.png)
 
-The model-timespan combination with the lowest RMSE value was found to be the "SARIMA_logdata" model with the 67 month training data timespan.  Its Mean Average Percent Error (MAPE) against the validation dataset was calculated. The error and forecast of the final model are shown in the plot below:
+The model-timespan combination with the lowest RMSE value was found to be the "SARIMA_logdata" model with the 67-month training data timespan.  Its Mean Average Percent Error (MAPE) against the validation dataset was calculated. The error and forecast of the final model are shown in the plot below:
 
 ![](Emissions_Images/Final_Model_Forecast_vs_Validation.png)
 
