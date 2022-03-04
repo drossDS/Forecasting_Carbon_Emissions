@@ -50,9 +50,9 @@ Four model varieties were created including:
 - Autoregressive Moving Average (ARMA) Models
 - Autoregressive Integrating Moving Average (ARIMA) Models
 
-Each of these four models were trained against all four datasets above, creating a combination of 16 model-dataset combinations.  Additionally, the *p* and *q* hyperparameters present in each of these model combinations were swept through the values 0 through 12 with *p* and *q* being equal in all cases to limit computation time by limiting total hyperparameter combinations to just 13.  Thus, each of the 16 model-dataset combinations was run with hyperparameters *p* and *q* set equal through the values 0 - 12 for a grand total of 208 individual model-dataset-hyperparameter combinations.   Each combination was fit to the input training datasets, and their predictions were compared against the actual emissions from the training data time period (1990 onward).  Root Mean Square Error (RMSE) values were then calculated for each model and are shown below.
+Each of these four models were trained against all four datasets above, creating a combination of 16 model-dataset combinations.  Additionally, the *p* and *q* hyperparameters present in each of these model combinations were swept through the values 0 through 12 with *p* and *q* being equal in all cases to limit computation time by limiting total hyperparameter combinations to just 13.  Thus, each of the 16 model-dataset combinations was run with hyperparameters *p* and *q* set equal through the values 0 - 12 for a grand total of 208 individual model-dataset-hyperparameter combinations.   Each combination was fit to the input training datasets, and their predictions were compared against the actual emissions from the training data time period (1990 onward).  Root Mean Square Error (RMSE) values were then calculated for each model and are reproduced in the table below with a color gradient applied showing the range of higher RMSE values (red) and lower RMSE values (blue).
 
-****** ******8Neeed the DIAGRAM HERE ***********
+![](Emissions_Images/Non-seasonal_RMSE.png)
 
 From error outputs, two important conclusions can be drawn:
 - Both shifted datasets produced much higher-error predictions, and the non-stationary datasets were providing much better predictions
