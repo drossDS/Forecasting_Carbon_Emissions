@@ -1,7 +1,7 @@
 [<< Back to Project Portfolio Website](https://drossds.github.io/Dan_Data_Science_Portfolio/)
 
 # Forecasting Carbon Emissions
-***Using Time series Regression Techniques to Predict Greenhouse Gas Emissions***
+***Using Time Series Regression Techniques to Predict Greenhouse Gas Emissions***
 
 ## Background and Problem Statement
 Global warming presents a major challenge to humanity, and in an effort to quantify and forecast its impacts, forecasts of carbon emissions would be a useful input.  Time series data were provided for monthly greenhouse gas emissions from a variety of fuel sources used for electric energy production in the United States from 1973 to 2016.  The fuel sources include natural gas, coal, and petroleum among others.  The goal of this project focused on forecasting the carbon dioxide (CO2) emissions from electric energy production fueled by natural gas for 12 months beyond the provided data.
