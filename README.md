@@ -1,4 +1,4 @@
-</*! [<< Back to Project Portfolio Website](https://drossds.github.io/Dan_Data_Science_Portfolio/) */>
+<!-- [<< Back to Project Portfolio Website](https://drossds.github.io/Dan_Data_Science_Portfolio/) -->
 
 # Forecasting Carbon Emissions
 ***Using Time Series Regression Techniques to Predict Greenhouse Gas Emissions***
